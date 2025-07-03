@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::middleware(['role:pelatih', 'location.access'])->group(function () {
+    Route::middleware(['role:pelatih'])->group(function () {
         Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatih'])->name('pelatih.dashboard');
 
         // Shop Routes for Pelatih
@@ -181,6 +181,27 @@ Route::middleware('auth')->group(function () {
             Route::get('/monthly-summary', [AnggotaAttendanceController::class, 'monthlySummary'])->name('monthly-summary');
             Route::get('/certificate', [AnggotaAttendanceController::class, 'certificate'])->name('certificate');
         });
+    });
+
+    // Debug route for checking user data
+    Route::get('/debug-user', function () {
+        $user = auth()->user();
+        if (!$user) {
+            return 'Not authenticated';
+        }
+
+        return [
+            'name' => $user->name,
+            'email' => $user->email,
+            'role_id' => $user->role_id,
+            'role_name' => $user->role ? $user->role->name : 'No role',
+            'location_id' => $user->location_id,
+            'location_name' => $user->location ? $user->location->name : 'No location',
+            'is_active' => $user->is_active,
+            'hasRole_pelatih' => $user->hasRole('pelatih'),
+            'hasRole_admin' => $user->hasRole('admin'),
+            'hasRole_anggota' => $user->hasRole('anggota'),
+        ];
     });
 
     // General dashboard fallback
