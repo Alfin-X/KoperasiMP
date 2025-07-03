@@ -26,7 +26,12 @@ class LocationAccessMiddleware
         if ($user->hasRole('pelatih')) {
             // Check if user has a location assigned
             if (!$user->location_id) {
-                abort(403, 'Anda belum memiliki lokasi yang ditugaskan. Hubungi administrator.');
+                abort(403, 'Anda belum memiliki lokasi yang ditugaskan. Hubungi administrator. (User ID: ' . $user->id . ', Location ID: ' . $user->location_id . ')');
+            }
+
+            // Check if location exists and is active
+            if (!$user->location || !$user->location->is_active) {
+                abort(403, 'Lokasi yang ditugaskan tidak aktif. Hubungi administrator. (Location ID: ' . $user->location_id . ')');
             }
 
             // For route model binding, check if the model has location_id
