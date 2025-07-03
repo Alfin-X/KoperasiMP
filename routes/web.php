@@ -110,7 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pelatih/dashboard', [DashboardController::class, 'pelatih'])->name('pelatih.dashboard');
 
         // Shop Routes for Pelatih
-        Route::prefix('shop')->name('shop.')->group(function () {
+        Route::prefix('shop')->name('pelatih.shop.')->group(function () {
             Route::get('/', [ShopController::class, 'index'])->name('index');
             Route::get('/product/{product}', [ShopController::class, 'show'])->name('show');
             Route::post('/cart/add/{product}', [ShopController::class, 'addToCart'])->name('cart.add');
@@ -121,7 +121,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // SPP Routes for Pelatih
-        Route::prefix('spp')->name('spp.')->group(function () {
+        Route::prefix('spp')->name('pelatih.spp.')->group(function () {
             Route::get('/', [PelatihSppController::class, 'index'])->name('index');
             Route::get('/payments', [PelatihSppController::class, 'payments'])->name('payments');
             Route::post('/{spp}/process-payment', [PelatihSppController::class, 'processPayment'])->name('process-payment');
@@ -130,7 +130,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // Attendance Routes for Pelatih
-        Route::prefix('attendance')->name('attendance.')->group(function () {
+        Route::prefix('attendance')->name('pelatih.attendance.')->group(function () {
             Route::get('/', [PelatihAttendanceController::class, 'index'])->name('index');
             Route::get('/attendances', [PelatihAttendanceController::class, 'attendances'])->name('attendances');
             Route::get('/create', [PelatihAttendanceController::class, 'create'])->name('create');
@@ -148,14 +148,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/anggota/dashboard', [DashboardController::class, 'anggota'])->name('anggota.dashboard');
 
         // Koperasi Routes for Anggota
-        Route::prefix('cooperative')->name('cooperative.')->group(function () {
+        Route::prefix('cooperative')->name('anggota.cooperative.')->group(function () {
             Route::get('/', [AnggotaCooperativeController::class, 'index'])->name('index');
             Route::get('/payment', [AnggotaCooperativeController::class, 'showPaymentForm'])->name('payment');
             Route::post('/payment', [AnggotaCooperativeController::class, 'processPayment'])->name('payment.process');
         });
 
         // Shop Routes for Anggota
-        Route::prefix('shop')->name('shop.')->group(function () {
+        Route::prefix('shop')->name('anggota.shop.')->group(function () {
             Route::get('/', [ShopController::class, 'index'])->name('index');
             Route::get('/product/{product}', [ShopController::class, 'show'])->name('show');
             Route::post('/cart/add/{product}', [ShopController::class, 'addToCart'])->name('cart.add');
@@ -166,7 +166,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // SPP Routes for Anggota
-        Route::prefix('spp')->name('spp.')->group(function () {
+        Route::prefix('spp')->name('anggota.spp.')->group(function () {
             Route::get('/', [AnggotaSppController::class, 'index'])->name('index');
             Route::get('/{spp}/payment', [AnggotaSppController::class, 'showPaymentForm'])->name('payment');
             Route::post('/{spp}/payment', [AnggotaSppController::class, 'processPayment'])->name('payment.process');
@@ -174,7 +174,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // Attendance Routes for Anggota
-        Route::prefix('attendance')->name('attendance.')->group(function () {
+        Route::prefix('attendance')->name('anggota.attendance.')->group(function () {
             Route::get('/', [AnggotaAttendanceController::class, 'index'])->name('index');
             Route::get('/schedules', [AnggotaAttendanceController::class, 'schedules'])->name('schedules');
             Route::get('/schedule/{schedule}', [AnggotaAttendanceController::class, 'showSchedule'])->name('schedule.show');
@@ -183,64 +183,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    // Debug route for checking user data
-    Route::get('/debug-user', function () {
-        $user = auth()->user();
-        if (!$user) {
-            return 'Not authenticated - please login first';
-        }
 
-        return [
-            'authenticated' => auth()->check(),
-            'name' => $user->name,
-            'email' => $user->email,
-            'role_id' => $user->role_id,
-            'role_name' => $user->role ? $user->role->name : 'No role',
-            'location_id' => $user->location_id,
-            'location_name' => $user->location ? $user->location->name : 'No location',
-            'is_active' => $user->is_active,
-            'hasRole_pelatih' => $user->hasRole('pelatih'),
-            'hasRole_admin' => $user->hasRole('admin'),
-            'hasRole_anggota' => $user->hasRole('anggota'),
-            'hasAnyRole_pelatih' => $user->hasAnyRole(['pelatih']),
-        ];
-    });
-
-    // Test route for pelatih role
-    Route::middleware(['auth', 'role:pelatih'])->get('/test-pelatih', function () {
-        return 'Pelatih role access works!';
-    });
-
-    // Test route for attendance
-    Route::middleware(['auth', 'role:pelatih'])->get('/test-attendance', function () {
-        return 'Attendance access works!';
-    });
-
-    // Debug route for checking all users
-    Route::get('/debug-all-users', function () {
-        $users = \App\Models\User::with('role')->get();
-        return $users->map(function($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role_id' => $user->role_id,
-                'role_name' => $user->role ? $user->role->name : 'No role',
-                'location_id' => $user->location_id,
-                'is_active' => $user->is_active,
-            ];
-        });
-    });
-
-    // Test login route
-    Route::get('/test-login', function () {
-        $user = \App\Models\User::where('email', 'pelatih.budi@mpjember.com')->with('role')->first();
-        if ($user) {
-            \Auth::login($user);
-            return 'Logged in as: ' . $user->name . ' (' . ($user->role ? $user->role->name : 'No role') . ')';
-        }
-        return 'User not found';
-    });
 
     // General dashboard fallback
     Route::get('/dashboard', function () {

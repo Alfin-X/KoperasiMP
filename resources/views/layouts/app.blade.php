@@ -115,19 +115,19 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('pelatih.attendance.*') ? 'active' : '' }}" href="{{ route('pelatih.attendance.index') }}">
                                             <i class="fas fa-clipboard-check me-2"></i>
                                             Absensi
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('spp.*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('pelatih.spp.*') ? 'active' : '' }}" href="{{ route('pelatih.spp.index') }}">
                                             <i class="fas fa-money-bill me-2"></i>
                                             SPP
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('shop.*') ? 'active' : '' }}" href="{{ route('shop.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('pelatih.shop.*') ? 'active' : '' }}" href="{{ route('pelatih.shop.index') }}">
                                             <i class="fas fa-shopping-cart me-2"></i>
                                             Toko
                                         </a>
@@ -140,25 +140,25 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('cooperative.*') ? 'active' : '' }}" href="{{ route('cooperative.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('anggota.cooperative.*') ? 'active' : '' }}" href="{{ route('anggota.cooperative.index') }}">
                                             <i class="fas fa-handshake me-2"></i>
                                             Koperasi
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('shop.*') ? 'active' : '' }}" href="{{ route('shop.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('anggota.shop.*') ? 'active' : '' }}" href="{{ route('anggota.shop.index') }}">
                                             <i class="fas fa-shopping-cart me-2"></i>
                                             Toko
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('spp.*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('anggota.spp.*') ? 'active' : '' }}" href="{{ route('anggota.spp.index') }}">
                                             <i class="fas fa-money-bill me-2"></i>
                                             SPP Saya
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
+                                        <a class="nav-link {{ request()->routeIs('anggota.attendance.*') ? 'active' : '' }}" href="{{ route('anggota.attendance.index') }}">
                                             <i class="fas fa-clipboard-check me-2"></i>
                                             Absensi Saya
                                         </a>
