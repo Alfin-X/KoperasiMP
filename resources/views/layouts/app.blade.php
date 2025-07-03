@@ -115,15 +115,21 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
                                             <i class="fas fa-clipboard-check me-2"></i>
                                             Absensi
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
-                                            <i class="fas fa-user-graduate me-2"></i>
-                                            Anggota
+                                        <a class="nav-link {{ request()->routeIs('spp.*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+                                            <i class="fas fa-money-bill me-2"></i>
+                                            SPP
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->routeIs('shop.*') ? 'active' : '' }}" href="{{ route('shop.index') }}">
+                                            <i class="fas fa-shopping-cart me-2"></i>
+                                            Toko
                                         </a>
                                     </li>
                                 @elseif(auth()->user()->hasRole('anggota'))
@@ -134,13 +140,25 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
-                                            <i class="fas fa-user me-2"></i>
-                                            Profil
+                                        <a class="nav-link {{ request()->routeIs('cooperative.*') ? 'active' : '' }}" href="{{ route('cooperative.index') }}">
+                                            <i class="fas fa-handshake me-2"></i>
+                                            Koperasi
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link {{ request()->routeIs('shop.*') ? 'active' : '' }}" href="{{ route('shop.index') }}">
+                                            <i class="fas fa-shopping-cart me-2"></i>
+                                            Toko
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->routeIs('spp.*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+                                            <i class="fas fa-money-bill me-2"></i>
+                                            SPP Saya
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}">
                                             <i class="fas fa-clipboard-check me-2"></i>
                                             Absensi Saya
                                         </a>
