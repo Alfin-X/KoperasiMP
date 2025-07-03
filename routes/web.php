@@ -184,7 +184,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Debug route for checking user data
-    Route::get('/debug-user', function () {
+    Route::middleware('auth')->get('/debug-user', function () {
         $user = auth()->user();
         if (!$user) {
             return 'Not authenticated';
@@ -202,6 +202,16 @@ Route::middleware('auth')->group(function () {
             'hasRole_admin' => $user->hasRole('admin'),
             'hasRole_anggota' => $user->hasRole('anggota'),
         ];
+    });
+
+    // Test route for pelatih role
+    Route::middleware(['auth', 'role:pelatih'])->get('/test-pelatih', function () {
+        return 'Pelatih role access works!';
+    });
+
+    // Test route for attendance
+    Route::middleware(['auth', 'role:pelatih'])->get('/test-attendance', function () {
+        return 'Attendance access works!';
     });
 
     // General dashboard fallback
