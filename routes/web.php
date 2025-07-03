@@ -184,13 +184,14 @@ Route::middleware('auth')->group(function () {
     });
 
     // Debug route for checking user data
-    Route::middleware('auth')->get('/debug-user', function () {
+    Route::get('/debug-user', function () {
         $user = auth()->user();
         if (!$user) {
-            return 'Not authenticated';
+            return 'Not authenticated - please login first';
         }
 
         return [
+            'authenticated' => auth()->check(),
             'name' => $user->name,
             'email' => $user->email,
             'role_id' => $user->role_id,
@@ -201,6 +202,7 @@ Route::middleware('auth')->group(function () {
             'hasRole_pelatih' => $user->hasRole('pelatih'),
             'hasRole_admin' => $user->hasRole('admin'),
             'hasRole_anggota' => $user->hasRole('anggota'),
+            'hasAnyRole_pelatih' => $user->hasAnyRole(['pelatih']),
         ];
     });
 
@@ -212,6 +214,32 @@ Route::middleware('auth')->group(function () {
     // Test route for attendance
     Route::middleware(['auth', 'role:pelatih'])->get('/test-attendance', function () {
         return 'Attendance access works!';
+    });
+
+    // Debug route for checking all users
+    Route::get('/debug-all-users', function () {
+        $users = \App\Models\User::with('role')->get();
+        return $users->map(function($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => $user->role_id,
+                'role_name' => $user->role ? $user->role->name : 'No role',
+                'location_id' => $user->location_id,
+                'is_active' => $user->is_active,
+            ];
+        });
+    });
+
+    // Test login route
+    Route::get('/test-login', function () {
+        $user = \App\Models\User::where('email', 'pelatih.budi@mpjember.com')->with('role')->first();
+        if ($user) {
+            \Auth::login($user);
+            return 'Logged in as: ' . $user->name . ' (' . ($user->role ? $user->role->name : 'No role') . ')';
+        }
+        return 'User not found';
     });
 
     // General dashboard fallback

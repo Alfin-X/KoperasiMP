@@ -27,7 +27,15 @@ class RoleMiddleware
         }
 
         if (!empty($roles) && !$user->hasAnyRole($roles)) {
-            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            \Log::info('Role check failed', [
+                'user_id' => $user->id,
+                'user_email' => $user->email,
+                'user_role_id' => $user->role_id,
+                'user_role_name' => $user->role ? $user->role->name : 'No role',
+                'required_roles' => $roles,
+                'hasAnyRole_result' => $user->hasAnyRole($roles)
+            ]);
+            abort(403, 'Anda tidak memiliki akses ke halaman ini. (User: ' . $user->email . ', Role: ' . ($user->role ? $user->role->name : 'No role') . ', Required: ' . implode(',', $roles) . ')');
         }
 
         return $next($request);
