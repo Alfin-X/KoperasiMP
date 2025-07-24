@@ -320,23 +320,33 @@ function viewProof(imageUrl) {
     const proofImage = document.getElementById('proofImage');
     const imageError = document.getElementById('imageError');
 
-    // Reset error state
-    imageError.style.display = 'none';
+    console.log('Loading image:', imageUrl); // Debug log
 
-    // Set image source
-    proofImage.src = imageUrl;
+    // Reset states
+    imageError.style.display = 'none';
+    proofImage.style.display = 'block';
 
     // Handle image load error
     proofImage.onerror = function() {
+        console.error('Failed to load image:', imageUrl);
+        imageError.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            Gambar tidak dapat dimuat.<br>
+            <small class="text-muted">URL: ${imageUrl}</small>
+        `;
         imageError.style.display = 'block';
         proofImage.style.display = 'none';
     };
 
     // Handle image load success
     proofImage.onload = function() {
+        console.log('Image loaded successfully:', imageUrl);
         imageError.style.display = 'none';
         proofImage.style.display = 'block';
     };
+
+    // Set image source (this should trigger onload or onerror)
+    proofImage.src = imageUrl;
 
     // Show modal
     const modal = new bootstrap.Modal(document.getElementById('proofModal'));
