@@ -151,7 +151,11 @@
                                 </button>
                                 @if($transaction->proof_image)
                                 <button type="button" class="btn btn-info btn-sm"
-                                        onclick="viewProof('{{ asset('storage/' . $transaction->proof_image) }}')"
+                                        onclick="viewProof('{{
+                                            str_starts_with($transaction->proof_image, 'http')
+                                                ? $transaction->proof_image
+                                                : asset('storage/' . $transaction->proof_image)
+                                        }}')"
                                         title="Lihat Bukti">
                                     <i class="fas fa-image"></i>
                                 </button>
@@ -238,17 +242,22 @@
 </div>
 
 <!-- Proof Image Modal -->
-<div class="modal fade" id="proofModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Bukti Transfer</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title" id="proofModalLabel">Bukti Transfer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img id="proofImage" src="" class="img-fluid" alt="Bukti Transfer">
+                <img id="proofImage" src="" class="img-fluid" alt="Bukti Transfer" style="max-height: 500px;">
+                <div id="imageError" class="alert alert-warning mt-3" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Gambar tidak dapat dimuat. Pastikan file gambar tersedia.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -308,7 +317,28 @@ function rejectTransaction(transactionId) {
 }
 
 function viewProof(imageUrl) {
-    document.getElementById('proofImage').src = imageUrl;
+    const proofImage = document.getElementById('proofImage');
+    const imageError = document.getElementById('imageError');
+
+    // Reset error state
+    imageError.style.display = 'none';
+
+    // Set image source
+    proofImage.src = imageUrl;
+
+    // Handle image load error
+    proofImage.onerror = function() {
+        imageError.style.display = 'block';
+        proofImage.style.display = 'none';
+    };
+
+    // Handle image load success
+    proofImage.onload = function() {
+        imageError.style.display = 'none';
+        proofImage.style.display = 'block';
+    };
+
+    // Show modal
     const modal = new bootstrap.Modal(document.getElementById('proofModal'));
     modal.show();
 }
