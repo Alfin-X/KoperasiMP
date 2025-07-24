@@ -23,6 +23,7 @@ class User extends Authenticatable
         'phone',
         'member_id',
         'tingkatan',
+        'tingkatan_id',
         'join_date',
         'role_id',
         'kolat_id',
@@ -70,6 +71,14 @@ class User extends Authenticatable
     public function kolat()
     {
         return $this->belongsTo(Kolat::class);
+    }
+
+    /**
+     * Get the tingkatan that owns the user.
+     */
+    public function tingkatan()
+    {
+        return $this->belongsTo(Tingkatan::class);
     }
 
     /**
