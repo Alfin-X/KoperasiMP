@@ -295,14 +295,14 @@
 <script>
 function approveTransaction(transactionId) {
     const form = document.getElementById('approveForm');
-    form.action = `{{ route('admin.koperasi.approve', '') }}/${transactionId}`;
+    form.action = `{{ url('admin/koperasi/transactions') }}/${transactionId}/approve`;
     const modal = new bootstrap.Modal(document.getElementById('approveModal'));
     modal.show();
 }
 
 function rejectTransaction(transactionId) {
     const form = document.getElementById('rejectForm');
-    form.action = `{{ route('admin.koperasi.reject', '') }}/${transactionId}`;
+    form.action = `{{ url('admin/koperasi/transactions') }}/${transactionId}/reject`;
     const modal = new bootstrap.Modal(document.getElementById('rejectModal'));
     modal.show();
 }
