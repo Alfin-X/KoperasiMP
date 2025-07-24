@@ -31,10 +31,12 @@
                         <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
                             Saldo Simpanan
                         </div>
-                        <div class="h3 mb-0 font-weight-bold text-white">Rp 0</div>
+                        <div class="h3 mb-0 font-weight-bold text-white">
+                            Rp {{ number_format($savings->total_balance ?? 0, 0, ',', '.') }}
+                        </div>
                         <div class="text-xs text-white-50 mt-2">
                             <i class="fas fa-calendar me-1"></i>
-                            Update terakhir: {{ now()->format('d M Y') }}
+                            Update terakhir: {{ $savings->updated_at ? $savings->updated_at->format('d M Y') : now()->format('d M Y') }}
                         </div>
                     </div>
                     <div class="col-auto">
@@ -55,7 +57,9 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Total Setor
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp 0</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    Rp {{ number_format($savings->total_balance ?? 0, 0, ',', '.') }}
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-arrow-up fa-2x text-gray-300"></i>
@@ -72,7 +76,9 @@
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Total Tarik
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp 0</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    Rp {{ number_format(0, 0, ',', '.') }}
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-arrow-down fa-2x text-gray-300"></i>
