@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center align-items-center min-vh-100">
-    <div class="col-md-6 col-lg-4">
+<div class="login-wrapper">
+    <div class="login-container">
         <div class="card shadow-lg">
             <div class="card-header text-center">
                 <h4 class="mb-0">
@@ -20,13 +20,13 @@
                             <i class="fas fa-envelope me-1"></i>
                             Email
                         </label>
-                        <input 
-                            type="email" 
-                            class="form-control @error('email') is-invalid @enderror" 
-                            id="email" 
-                            name="email" 
-                            value="{{ old('email') }}" 
-                            required 
+                        <input
+                            type="email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            id="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            required
                             autofocus
                             placeholder="Masukkan email Anda"
                         >
@@ -42,11 +42,11 @@
                             <i class="fas fa-lock me-1"></i>
                             Password
                         </label>
-                        <input 
-                            type="password" 
-                            class="form-control @error('password') is-invalid @enderror" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            type="password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            id="password"
+                            name="password"
                             required
                             placeholder="Masukkan password Anda"
                         >
@@ -91,10 +91,46 @@
 @push('styles')
 <style>
     body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #f8f9fa !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden;
     }
-    .min-vh-100 {
-        min-height: 100vh !important;
+
+    .main-content {
+        margin-left: 0 !important;
+        background-color: #f8f9fa !important;
+    }
+
+    .login-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f9fa;
+        z-index: 9999;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .card {
+        border: none !important;
+        border-radius: 15px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+        width: 100%;
+    }
+
+    /* Hide sidebar for login page */
+    .sidebar {
+        display: none !important;
     }
 </style>
 @endpush
