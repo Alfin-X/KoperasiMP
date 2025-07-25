@@ -138,7 +138,7 @@
                         <span class="badge bg-warning rounded-pill">{{ $pendingSppPayments }}</span>
                     </div>
                     @endif
-                    
+
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <i class="fas fa-calendar text-info me-2"></i>
@@ -146,7 +146,7 @@
                         </div>
                         <span class="badge bg-info rounded-pill">5</span>
                     </div>
-                    
+
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <i class="fas fa-shopping-cart text-success me-2"></i>
