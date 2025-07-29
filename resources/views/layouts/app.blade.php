@@ -13,16 +13,37 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <style>
         .sidebar {
-            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 16.66667%; /* col-lg-2 equivalent */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-y: auto;
+            z-index: 1000;
         }
+
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 25%; /* col-md-3 equivalent */
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+        }
+
         .sidebar .nav-link {
             color: rgba(255,255,255,0.8);
             padding: 0.75rem 1rem;
@@ -38,7 +59,21 @@
         .main-content {
             background-color: #f8f9fa;
             min-height: 100vh;
+            margin-left: 16.66667%; /* col-lg-2 equivalent */
         }
+
+        @media (max-width: 991.98px) {
+            .main-content {
+                margin-left: 25%; /* col-md-3 equivalent */
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
         .card {
             border: none;
             border-radius: 1rem;
@@ -56,22 +91,36 @@
         .btn-primary:hover {
             background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
         }
+
+        /* Custom scrollbar for sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
+        }
     </style>
 
     @stack('styles')
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            @auth
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-                <div class="position-sticky pt-3">
+        @auth
+        <!-- Sidebar -->
+        <nav class="sidebar d-md-block">
+            <div class="pt-3">
                     <div class="text-center mb-4">
                         <h5 class="text-white">{{ config('app.name') }}</h5>
                         <small class="text-white-50">{{ auth()->user()->role->display_name }}</small>
                     </div>
-                    
+
                     <ul class="nav flex-column">
                         @if(auth()->user()->isAdmin())
                             <li class="nav-item">
@@ -179,7 +228,7 @@
                                 </a>
                             </li>
                         @endif
-                        
+
                         <hr class="text-white-50">
                         <li class="nav-item">
                             <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -193,7 +242,7 @@
             @endauth
 
             <!-- Main content -->
-            <main class="@auth col-md-9 ms-sm-auto col-lg-10 @endauth main-content">
+            <main class="main-content">
                 @auth
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">@yield('title', 'Dashboard')</h1>
@@ -235,7 +284,6 @@
                     @yield('content')
                 </div>
             </main>
-        </div>
     </div>
 
     @auth
@@ -246,7 +294,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     @stack('scripts')
 </body>
 </html>

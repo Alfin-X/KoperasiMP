@@ -86,6 +86,14 @@
                             Anggota Aktif
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $anggotaAktif }}</div>
+                        <div class="mt-2">
+                            <a href="#" class="text-xs text-primary text-decoration-none"
+                               data-bs-toggle="modal"
+                               data-bs-target="#kolatModal">
+                                <i class="fas fa-eye fa-sm me-1"></i>
+                                Lihat Detail Kolat
+                            </a>
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -305,6 +313,100 @@
     }
 </style>
 @endpush
+
+<!-- Kolat Detail Modal -->
+<div class="modal fade" id="kolatModal" tabindex="-1" aria-labelledby="kolatModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="kolatModalLabel">
+                    <i class="fas fa-home me-2"></i>
+                    Detail Kolat
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <i class="fas fa-users fa-3x text-primary mb-2"></i>
+                    <h6 class="text-muted">Daftar Kolat Aktif</h6>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ route('admin.users.index', ['kolat' => 'matasa']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-home text-primary me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Matasa</h6>
+                                <small class="text-muted">Kolat Matasa</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                            <small class="text-muted d-block">Lihat Anggota</small>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.users.index', ['kolat' => 'polije']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-home text-success me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Polije</h6>
+                                <small class="text-muted">Kolat Polije</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                            <small class="text-muted d-block">Lihat Anggota</small>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.users.index', ['kolat' => 'unej']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-home text-info me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Unej</h6>
+                                <small class="text-muted">Kolat Unej</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                            <small class="text-muted d-block">Lihat Anggota</small>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.users.index', ['kolat' => 'rolasi']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-home text-warning me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Rolasi</h6>
+                                <small class="text-muted">Kolat Rolasi</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                            <small class="text-muted d-block">Lihat Anggota</small>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.users.index', ['kolat' => 'smasa']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-home text-danger me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Smasa</h6>
+                                <small class="text-muted">Kolat Smasa</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                            <small class="text-muted d-block">Lihat Anggota</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {{-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>
+                    Tutup
+                </button>
+            </div> --}}
+        </div>
+    </div>
+</div>
 
 @push('scripts')
 <script>
