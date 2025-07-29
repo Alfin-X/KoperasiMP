@@ -55,6 +55,13 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/koperasi/transactions/{transaction}/reject', [App\Http\Controllers\Admin\KoperasiController::class, 'rejectTransaction'])->name('koperasi.reject');
         Route::post('/koperasi/transactions/add', [App\Http\Controllers\Admin\KoperasiController::class, 'addTransaction'])->name('koperasi.add-transaction');
 
+        // Simpanan Anggota Management
+        Route::get('/simpanan-anggota', [App\Http\Controllers\Admin\SimpananAnggotaController::class, 'index'])->name('simpanan-anggota.index');
+        Route::get('/simpanan-anggota/{user}', [App\Http\Controllers\Admin\SimpananAnggotaController::class, 'show'])->name('simpanan-anggota.show');
+        Route::post('/simpanan-anggota/{user}/transactions', [App\Http\Controllers\Admin\SimpananAnggotaController::class, 'storeTransaction'])->name('simpanan-anggota.store-transaction');
+        Route::put('/simpanan-anggota/transactions/{transaction}', [App\Http\Controllers\Admin\SimpananAnggotaController::class, 'updateTransaction'])->name('simpanan-anggota.update-transaction');
+        Route::delete('/simpanan-anggota/transactions/{transaction}', [App\Http\Controllers\Admin\SimpananAnggotaController::class, 'deleteTransaction'])->name('simpanan-anggota.delete-transaction');
+
         // E-commerce Management
         Route::resource('ecommerce', App\Http\Controllers\Admin\EcommerceController::class);
         Route::get('/ecommerce/orders', [App\Http\Controllers\Admin\EcommerceController::class, 'orders'])->name('ecommerce.orders');
