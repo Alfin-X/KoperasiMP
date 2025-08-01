@@ -64,7 +64,7 @@
                     <small class="text-muted">Tingkatan:</small>
                     <div>
                         @if($user->tingkatan)
-                            <span class="badge badge-info">{{ $user->tingkatan->name }}</span>
+                            <span class="badge badge-info">{{ $user->tingkatan }}</span>
                         @else
                             N/A
                         @endif

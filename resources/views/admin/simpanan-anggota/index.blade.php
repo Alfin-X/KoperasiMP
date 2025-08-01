@@ -133,7 +133,7 @@
                         <td>{{ $member->kolat->name ?? 'N/A' }}</td>
                         <td>
                             @if($member->tingkatan)
-                                <span class="badge badge-info">{{ $member->tingkatan->name }}</span>
+                                <span class="badge badge-info">{{ $member->tingkatan }}</span>
                             @else
                                 <span class="badge badge-secondary">N/A</span>
                             @endif
