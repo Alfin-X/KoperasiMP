@@ -311,91 +311,115 @@
         align-items: center;
         justify-content: center;
     }
+    .avatar {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .avatar-initial {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: white;
+    }
+    .member-item {
+        transition: all 0.2s ease;
+    }
+    .member-item:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .badge-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+    .members-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    .members-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    .members-list::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+    .members-list::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
 </style>
 @endpush
 
-<!-- Kolat Detail Modal -->
+<!-- Members Detail Modal -->
 <div class="modal fade" id="kolatModal" tabindex="-1" aria-labelledby="kolatModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="kolatModalLabel">
-                    <i class="fas fa-home me-2"></i>
-                    Detail Kolat
+                    <i class="fas fa-users me-2"></i>
+                    Seluruh Anggota Merpati Putih
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="text-center mb-3">
                     <i class="fas fa-users fa-3x text-primary mb-2"></i>
-                    <h6 class="text-muted">Daftar Kolat Aktif</h6>
+                    <h6 class="text-muted">Total {{ $allMembers->count() }} Anggota Aktif</h6>
                 </div>
-                <div class="list-group list-group-flush">
-                    <a href="{{ route('admin.users.index', ['kolat' => 'matasa']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+
+                <!-- Search Box -->
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" id="memberSearch" placeholder="Cari nama anggota...">
+                    </div>
+                </div>
+
+                <!-- Members List -->
+                <div class="members-list" style="max-height: 400px; overflow-y: auto;">
+                    @forelse($allMembers as $member)
+                    <div class="member-item list-group-item list-group-item-action d-flex align-items-center justify-content-between mb-2 border rounded">
                         <div class="d-flex align-items-center">
-                            <i class="fas fa-home text-primary me-3"></i>
+                            <div class="avatar avatar-sm me-3">
+                                <div class="avatar-initial rounded-circle bg-primary">
+                                    {{ strtoupper(substr($member->name, 0, 2)) }}
+                                </div>
+                            </div>
                             <div>
-                                <h6 class="mb-1">Matasa</h6>
-                                <small class="text-muted">Kolat Matasa</small>
+                                <h6 class="mb-1 member-name">{{ $member->name }}</h6>
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted me-3">
+                                        <i class="fas fa-home me-1"></i>
+                                        {{ $member->kolat->name ?? 'N/A' }}
+                                    </small>
+                                    @if($member->tingkatan)
+                                    <span class="badge badge-info badge-sm">{{ $member->tingkatan->name }}</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="text-end">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                            <small class="text-muted d-block">Lihat Anggota</small>
+                            <a href="{{ route('admin.simpanan-anggota.show', $member) }}"
+                               class="btn btn-primary btn-sm"
+                               title="Lihat Detail Simpanan">
+                                <i class="fas fa-eye"></i>
+                            </a>
                         </div>
-                    </a>
-                    <a href="{{ route('admin.users.index', ['kolat' => 'polije']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-home text-success me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Polije</h6>
-                                <small class="text-muted">Kolat Polije</small>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                            <small class="text-muted d-block">Lihat Anggota</small>
-                        </div>
-                    </a>
-                    <a href="{{ route('admin.users.index', ['kolat' => 'unej']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-home text-info me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Unej</h6>
-                                <small class="text-muted">Kolat Unej</small>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                            <small class="text-muted d-block">Lihat Anggota</small>
-                        </div>
-                    </a>
-                    <a href="{{ route('admin.users.index', ['kolat' => 'rolasi']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-home text-warning me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Rolasi</h6>
-                                <small class="text-muted">Kolat Rolasi</small>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                            <small class="text-muted d-block">Lihat Anggota</small>
-                        </div>
-                    </a>
-                    <a href="{{ route('admin.users.index', ['kolat' => 'smasa']) }}" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-home text-danger me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Smasa</h6>
-                                <small class="text-muted">Kolat Smasa</small>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                            <small class="text-muted d-block">Lihat Anggota</small>
-                        </div>
-                    </a>
+                    </div>
+                    @empty
+                    <div class="text-center py-4">
+                        <i class="fas fa-users fa-3x text-gray-300 mb-3"></i>
+                        <p class="text-muted">Belum ada anggota aktif.</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
             {{-- <div class="modal-footer">
@@ -410,6 +434,29 @@
 
 @push('scripts')
 <script>
+// Member search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('memberSearch');
+    const memberItems = document.querySelectorAll('.member-item');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+
+            memberItems.forEach(function(item) {
+                const memberName = item.querySelector('.member-name').textContent.toLowerCase();
+                const kolatName = item.querySelector('.text-muted').textContent.toLowerCase();
+
+                if (memberName.includes(searchTerm) || kolatName.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
+});
+
 function approveTransaction(transactionId) {
     const form = document.getElementById('approveForm');
     form.action = `{{ url('admin/koperasi/transactions') }}/${transactionId}/approve`;

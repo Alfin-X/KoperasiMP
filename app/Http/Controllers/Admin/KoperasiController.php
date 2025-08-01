@@ -30,13 +30,23 @@ class KoperasiController extends Controller
             ->take(10)
             ->get();
 
+        // Ambil semua anggota untuk modal
+        $allMembers = User::whereHas('role', function($query) {
+                $query->where('name', 'anggota');
+            })
+            ->with(['kolat', 'tingkatan'])
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
         return view('admin.koperasi.index', [
             'title' => 'Manajemen Koperasi',
             'totalSimpanan' => $totalSimpanan,
             'totalPinjaman' => $totalPinjaman,
             'pendingApproval' => $pendingApproval,
             'anggotaAktif' => $anggotaAktif,
-            'pendingTransactions' => $pendingTransactions
+            'pendingTransactions' => $pendingTransactions,
+            'allMembers' => $allMembers
         ]);
     }
 
