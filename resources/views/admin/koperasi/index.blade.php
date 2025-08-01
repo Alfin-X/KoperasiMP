@@ -91,7 +91,7 @@
                                data-bs-toggle="modal"
                                data-bs-target="#kolatModal">
                                 <i class="fas fa-eye fa-sm me-1"></i>
-                                Lihat Detail Kolat
+                                Lihat Detail Seluruh Anggota
                             </a>
                         </div>
                     </div>
