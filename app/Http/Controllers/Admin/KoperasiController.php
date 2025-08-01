@@ -34,7 +34,7 @@ class KoperasiController extends Controller
         $allMembers = User::whereHas('role', function($query) {
                 $query->where('name', 'anggota');
             })
-            ->with(['kolat', 'tingkatan'])
+            ->with(['kolat'])
             ->where('is_active', true)
             ->orderBy('name')
             ->get();

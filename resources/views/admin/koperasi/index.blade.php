@@ -401,7 +401,7 @@
                                         {{ $member->kolat->name ?? 'N/A' }}
                                     </small>
                                     @if($member->tingkatan)
-                                    <span class="badge badge-info badge-sm">{{ $member->tingkatan->name }}</span>
+                                    <span class="badge badge-info badge-sm">{{ $member->tingkatan }}</span>
                                     @endif
                                 </div>
                             </div>
